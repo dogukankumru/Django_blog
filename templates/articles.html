@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<form >
+<p align="right"><input type="text" name="keyword" class="input-sm" maxlength="64" placeholder="Ara.."> <button type="submit" class="btn btn-primary">Ara</button></p>
+
+</form>
+<div class= "row">
+    <div class= "col-md-8 offset-md-3">
+<h3>Makaleler</h3>
+<hr>
+
+
+
+
+</div>
+</div>
+<div class= "row">
+    <div class= "col-md-10 offset-md-3">
+{% if articles %}
+
+{% for article in articles %}
+
+<div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-7">
+                    <!-- Post content-->
+                    <article>
+                        <!-- Post header-->
+                        <header class="mb-4">
+                            <!-- Post title-->
+                            <a href="{% url 'article:detail' article.id %}"><h3 class="fw-bolder mb-1">{{article.title}}</h3> </a>
+                            <!-- Post meta content-->
+                            <div class="text-muted fst-italic mb-2">{{article.created_date}} tarihinde {{article.author.username}} tarafından oluşturuldu</div>
+                            <!-- Post categories-->
+                            
+                        </header>
+                        <hr>
+                        <!-- Preview image figure-->
+                        {% if article.article_image %}
+                        <a href="/articles/article/{{article.id}}"><img class="img-fluid rounded" src="{{article.article_image.url}}" alt=""></a>
+                        <hr>
+                        {% endif %}
+                        
+                        <!-- Post content-->
+                        <section class="mb-5">
+                            {{article.content|safe|truncatewords:30}}  <!--Ckeditorde yazılaların güzel gözükmesi için safe tagı ekliyoruz -->
+                        </section>
+                        
+                    </article>
+                    
+                </div>
+                
+                
+            </div>
+        
+</div>
+
+{% endfor %}
+
+    
+
+{% else %}
+
+<div class="alert alert-danger">Henüz makale bulunmuyor! </div>
+
+{% endif %}
+
+
+{% endblock body %}
